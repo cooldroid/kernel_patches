@@ -63,10 +63,10 @@ index a5ccf2c55f911..997cc53c35bb2 100644
 +#define src1end	x7
 +#define src2end	x8
  
- SYM_FUNC_START(__pi_memcmp)
+ SYM_FUNC_START_WEAK_PI(memcmp)
 -	subs	limit, limit, 8
 -	b.lo	L(less8)
- 
+-
 -	ldr	data1, [src1], 8
 -	ldr	data2, [src2], 8
 -	cmp	data1, data2
@@ -126,10 +126,10 @@ index a5ccf2c55f911..997cc53c35bb2 100644
 -	ccmp	data1, data2, 0, hi
 -	ccmp	data1h, data2h, 0, eq
 -	b.eq	L(loop16)
--
 +L(loop32):
 +	ldp	data1, data3, [src1, 16]
 +	ldp	data2, data4, [src2, 16]
+ 
  	cmp	data1, data2
 -	bne	L(return)
 -	mov	data1, data1h
@@ -289,5 +289,5 @@ index a5ccf2c55f911..997cc53c35bb2 100644
 +	cmp	data1, data2
 +	cneg	result, result, lo
  	ret
- SYM_FUNC_END(__pi_memcmp)
- SYM_FUNC_ALIAS_WEAK(memcmp, __pi_memcmp)
+ 
+ SYM_FUNC_END_PI(memcmp)
